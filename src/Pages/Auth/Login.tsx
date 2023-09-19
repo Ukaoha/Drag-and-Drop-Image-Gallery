@@ -14,9 +14,6 @@ import { CircleLoader } from 'react-spinners';
 import './Auth.css'
 import Loader from '../../Components/Loader/Loader';
 
-
-
-
 // validated inputs
 
 const validationSchema = Yup.object().shape({
@@ -36,17 +33,6 @@ const provider = new GoogleAuthProvider();
 const Login = () => {
   const navigate = useNavigate();
   
-  // redirect
-// //   const previousUrl = useSelector(selectPreviousUrl)
-
-//   const redirectUser = () => {
-//     if(previousUrl.includes('cart')){
-//       navigate('/cart')
-//     } else{
-//       navigate('/')
-//     }
-//   }
-
   // login in with google
   const SignInWithGoogle = ()=> {
     signInWithPopup(auth, provider)
@@ -87,7 +73,7 @@ onSubmit={(values, { setSubmitting }) => {
      setSubmitting(false);
     toast.success('Login successful');
     // redirectUser()
-    navigate('/imageGallary')
+    navigate('/gallery')
 
 
     // ...

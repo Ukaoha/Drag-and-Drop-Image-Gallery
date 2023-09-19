@@ -1,0 +1,82 @@
+/* components/ImageCard.css */
+/* .image-card {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+  }
+  
+  .image-card img {
+    max-width: 100%;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .tags {
+    margin-top: 10px;
+  }
+  
+  .tag {
+    display: inline-block;
+    margin: 4px;
+    padding: 4px 8px;
+    background-color: #007acc;
+    color: #fff;
+    border-radius: 4px;
+  } */
+  /* components/ImageCard.css */
+.image-card {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+  }
+  
+  .image {
+    width: 200px; /* Set your desired width */
+    height: 200px; /* Set your desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+  }
+  
+  .tags {
+    margin-top: 10px;
+  }
+  
+  .tag {
+    display: inline-block;
+    margin: 4px;
+    padding: 4px 8px;
+    background-color: #007acc;
+    color: #fff;
+    border-radius: 4px;
+  }
+  
+  
+  /* components/ImageGallery.css */
+  .image-gallery {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .loader {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  
+  .image-grid > div {
+    cursor: pointer;
+  }
+  
+  /* Add more CSS as needed */
+  
