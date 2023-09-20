@@ -2,6 +2,7 @@ export interface ImageData {
     id: string;
     src: string;
     tags: string[];
+    position?: number;
   }
   
   export const imageData: ImageData[] = [

@@ -1,19 +1,14 @@
-// components/ImageGallery.tsx
 import React, { useState } from 'react';
 import { ImageData, imageData } from '../../data';
 import ImageCard from './ImgCard';
-import './imageGallery.css'
-import Loader from '../Loader/Loader';
-import { CircleLoader } from 'react-spinners';
+import './imageGallery.css';
 
 const Gallery: React.FC = () => {
   const [images, setImages] = useState<ImageData[]>(imageData);
-  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [draggedImage, setDraggedImage] = useState<ImageData | null>(null);
 
-  const handleDragStart = (image: ImageData) => {
-    setDraggedImage(image);
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, image: ImageData) => {
+    e.dataTransfer.setData('imageId', image.id);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -22,16 +17,19 @@ const Gallery: React.FC = () => {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (draggedImage) {
-      const updatedImages = images.map((image) => {
-        if (image.id === draggedImage.id) {
-          return { ...draggedImage };
-        }
-        return image;
-      });
-      setImages(updatedImages);
-      setDraggedImage(null);
-    }
+    const droppedImageId = e.dataTransfer.getData('imageId');
+
+    const updatedImages = images.map((image) => {
+      if (image.id === droppedImageId) {
+        return { ...image, position: Date.now() }; // Update the position property to rearrange images
+      }
+      return image;
+    });
+
+    // Sort images based on position to update their order
+    updatedImages.sort((a, b) => (a.position || 0) - (b.position || 0));
+
+    setImages(updatedImages);
   };
 
   const filteredImages = images.filter((image) =>
@@ -40,34 +38,29 @@ const Gallery: React.FC = () => {
 
   return (
     <div className="image-gallery">
-      {/* Search Input */}
       <input
+      className='search'
         type="text"
         placeholder="Search by tags..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      {/* Images */}
-      {loading ? (
-        <div>      loading....</div>
-      ) : (
-        <div
-          className="image-grid"
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          {filteredImages.map((image) => (
-            <div
-              key={image.id}
-              draggable
-              onDragStart={() => handleDragStart(image)}
-            >
-              <ImageCard {...image} />
-            </div>
-          ))}
-        </div>
-      )}
+      <div
+        className="image-grid"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        {filteredImages.map((image) => (
+          <div
+            key={image.id}
+            draggable
+            onDragStart={(e) => handleDragStart(e, image)}
+          >
+            <ImageCard {...image} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

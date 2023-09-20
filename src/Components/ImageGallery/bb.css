@@ -1,5 +1,4 @@
-  
-  .image-card {
+.image-card {
     border: 1px solid #ccc;
     margin: 10px;
     padding: 10px;
@@ -8,9 +7,9 @@
   }
   
   .image {
-    width: 200px; 
-    height: 200px; 
-    object-fit: cover; 
+    width: 200px; /* Set your desired width */
+    height: 200px; /* Set your desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
   }
   
   .tags {
@@ -30,7 +29,7 @@
   /* components/ImageGallery.css */
   .image-gallery {
     max-width: 800px;
-    margin:  auto;
+    margin: 0 auto;
     padding: 20px;
   }
   
@@ -41,7 +40,6 @@
   }
   
   .image-grid {
-    margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 10px;
@@ -51,15 +49,3 @@
     cursor: pointer;
   }
   
-  input.search {
-    width: 80%;
-    border: 1px solid blue;
-    display: block;
-    padding: 9px 4px 9px 40px;
-    margin-bottom: 50px;
-    border-radius: .8rem;
-    margin: auto;
-    outline: none;
-
-}
-
