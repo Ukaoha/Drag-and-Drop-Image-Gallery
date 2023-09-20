@@ -1,4 +1,13 @@
-# Getting Started with Create React App
+This is an [Image Gallery ](https://drag-and-drop-image-gallery-eight.vercel.app/) 
+
+# ImageGallery
+
+##  A drag and drop image apllication with firebase authentication.  This project is built using React,  CSS, firebase  and Typescript. it is deployed on Vercel.
+
+Live link:  [Image Gallery ](https://drag-and-drop-image-gallery-eight.vercel.app/) 
+
+
+### Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
