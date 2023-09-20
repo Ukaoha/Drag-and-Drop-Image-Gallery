@@ -49,7 +49,7 @@ createUserWithEmailAndPassword(auth, values.email, values.password)
   setIsLoading(false)
     setSubmitting(false);
 
-    navigate('/imageGallary')
+    navigate('/gallery')
   toast.success("Registration successful");
   
   
