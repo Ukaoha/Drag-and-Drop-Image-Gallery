@@ -3,6 +3,9 @@ export interface ImageData {
     src: string;
     tags: string[];
     position?: number;
+    translateX?: number;
+    translateY?: number;
+  
   }
   
   export const imageData: ImageData[] = [

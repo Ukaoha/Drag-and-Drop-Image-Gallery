@@ -180,7 +180,6 @@
 // export default Gallery;
 
 
-
 import React, { useState, useRef } from 'react';
 import { ImageData, imageData } from '../../data';
 import ImageCard from './ImgCard';
@@ -189,12 +188,11 @@ import './imageGallery.css';
 const Gallery: React.FC = () => {
   const [images, setImages] = useState<ImageData[]>(imageData);
   const [searchTerm, setSearchTerm] = useState('');
-
-  const dragImageRef = useRef<ImageData | null>(null);
+  const dragItem = useRef<ImageData | null>(null);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, image: ImageData) => {
     e.dataTransfer.setData('imageId', image.id);
-    dragImageRef.current = image;
+    dragItem.current = image;
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -205,51 +203,33 @@ const Gallery: React.FC = () => {
     e.preventDefault();
     const droppedImageId = e.dataTransfer.getData('imageId');
 
-    if (dragImageRef.current) {
-      const updatedImages = images.map((image) => {
-        if (image.id === droppedImageId) {
-          return { ...image, position: Date.now() }; // Update the position property to rearrange images
-        }
-        return image;
-      });
+    const updatedImages = images.map((image) => {
+      if (image.id === droppedImageId) {
+        return { ...image, position: Date.now() };
+      }
+      return image;
+    });
 
-      // Sort images based on position to update their order
-      updatedImages.sort((a, b) => (a.position || 0) - (b.position || 0));
+    updatedImages.sort((a, b) => (a.position || 0) - (b.position || 0));
 
-      setImages(updatedImages);
-    }
-
-    dragImageRef.current = null;
+    setImages(updatedImages);
+    dragItem.current = null;
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>, image: ImageData) => {
-    // Prevent default behavior to avoid interference with touch scrolling
-    e.preventDefault();
-    dragImageRef.current = image;
+    dragItem.current = image;
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault();
+    if (dragItem.current) {
+      e.preventDefault();
+    }
   };
 
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (dragImageRef.current) {
-      const droppedImageId = dragImageRef.current.id;
-
-      const updatedImages = images.map((image) => {
-        if (image.id === droppedImageId) {
-          return { ...image, position: Date.now() }; // Update the position property to rearrange images
-        }
-        return image;
-      });
-
-      // Sort images based on position to update their order
-      updatedImages.sort((a, b) => (a.position || 0) - (b.position || 0));
-
-      setImages(updatedImages);
+  const handleTouchEnd = () => {
+    if (dragItem.current) {
+      dragItem.current = null;
     }
-
-    dragImageRef.current = null;
   };
 
   const filteredImages = images.filter((image) =>
@@ -271,6 +251,7 @@ const Gallery: React.FC = () => {
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {filteredImages.map((image) => (
           <div
@@ -289,3 +270,6 @@ const Gallery: React.FC = () => {
 };
 
 export default Gallery;
+
+
+
