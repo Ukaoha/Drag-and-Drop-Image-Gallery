@@ -4,6 +4,7 @@ import { useDrag, useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { imageData, ImageData } from '../../data';
 import './img.css'; // Import your CSS
+import Loader from '../Loader/Loader';
 
 const Image: React.FC<{
   image: ImageData;
@@ -75,7 +76,7 @@ const ImageGallery: React.FC = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
       {loading ? (
-        <div className="loader">Loading...</div>
+        <div className="loader"><Loader/></div>
       ) : (
         <div className="image-grid">
           {filteredImages.map((image, index) => (
