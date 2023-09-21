@@ -1,10 +1,14 @@
-// ImageGallery.tsx
+
 import React, { useState, useEffect } from 'react';
 import { useDrag, useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import { imageData, ImageData } from '../../data';
 import './img.css'; // Import your CSS
 import Loader from '../Loader/Loader';
+
+const isTouchDevice = 'ontouchstart' in window;
+const dndBackend = isTouchDevice ? TouchBackend : HTML5Backend; // Choose backend based on touch screen support
 
 const Image: React.FC<{
   image: ImageData;
@@ -70,7 +74,6 @@ const ImageGallery: React.FC = () => {
       <input
         type="text"
         className='search'
-
         placeholder="Search..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -78,14 +81,17 @@ const ImageGallery: React.FC = () => {
       {loading ? (
         <div className="loader"><Loader/></div>
       ) : (
-        <div className="image-grid">
-          {filteredImages.map((image, index) => (
-            <Image key={image.id}image={image} index={index} moveImage={moveImage} />
-          ))}
-        </div>
+        <DndProvider backend={dndBackend}> {/* Use the selected backend */}
+          <div className="image-grid">
+            {filteredImages.map((image, index) => (
+              <Image key={image.id} image={image} index={index} moveImage={moveImage} />
+            ))}
+          </div>
+        </DndProvider>
       )}
     </div>
   );
 };
 
 export default ImageGallery;
+
